@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fruit Recognition System</title>
+    <link rel="stylesheet" href="../CSS/nural-network.css" />
+  </head>
+
+  <body>
+    <div id="container" class="container">
+      <h2 id="title-header" class="title-header">Fruit Recognition System</h2>
+
+      <div id="input-row" class="input-row">
+        <label for="hidden-neurons">Hidden Layer Neurons:</label>
+        <input
+          type="number"
+          id="hidden-neurons"
+          placeholder="Enter number of neurons"
+          min="1"
+        />
+      </div>
+
+      <div id="input-row" class="input-row">
+        <label for="activation-function-hidden"
+          >Activation Function for hidden layer:</label
+        >
+        <select id="activation-function-hidden">
+          <option value="" selected disabled>Please select</option>
+          <option value="sigmoid">Sigmoid</option>
+          <option value="relu">ReLU</option>
+          <option value="tanh">Tanh</option>
+        </select>
+      </div>
+
+      <div id="input-row" class="input-row">
+        <label for="activation-function-output"
+          >Activation Function for output layer:</label
+        >
+        <select id="activation-function-output">
+          <option value="" selected disabled>Please select</option>
+          <option value="sigmoid">Sigmoid</option>
+          <option value="softmax">Softmax</option>
+        </select>
+      </div>
+
+      <div id="input-row" class="input-row">
+        <label for="learning-rate">Learning Rate:</label>
+        <input
+          type="number"
+          id="learning-rate"
+          placeholder="Enter learning rate"
+          max="1"
+          step="0.01"
+        />
+      </div>
+
+      <div id="input-row" class="input-row">
+        <label for="max-epochs">Max Epochs:</label>
+        <input
+          type="number"
+          id="max-epochs"
+          placeholder="Enter max epochs"
+          min="1"
+        />
+      </div>
+
+      <div id="input-row" class="input-row">
+        <label for="data-rows">Data rows:</label>
+        <input
+          type="number"
+          id="data-rows"
+          placeholder="Enter data rows"
+          min="1"
+        />
+      </div>
+
+      <div>
+        <button
+          id="train-button"
+          class="train-button"
+          onclick="getPageValues()"
+        >
+          Train Model
+        </button>
+      </div>
+    </div>
+
+    <div id="tableContainer">
+      <table id="table"></table>
+      <button onclick="initialization()">Start</button>
+    </div>
+
+    <div id="resultContainer">
+      <h2>Results</h2>
+      <div id="finalResults"></div>
+      <button class="lastBtn" onclick="finalStep()">Try A Sample</button>
+      <div class="finalP">
+        <h2>Accuracy=</h2>
+        <h2 id="resultForAccuracy"></h2>
+      </div>
+
+      <div class="finalP3">
+        <div class="tn1">
+          <h2>Number of TN[<span id="Tn"></span>]</h2>
+        </div>
+        <div class="tn1">
+          <h2>Number of FP[<span id="Fp"></span>]</h2>
+        </div>
+        <div class="tn1">
+          <h2>Number of samples[<span id="datarows"></span>]</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="testDiv" id="testDiv">
+      <table>
+        <thead>
+          <tr>
+            <th><b>Color</b></th>
+            <th><b>Sweetness</b></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <select id="colorSelect">
+                <option value="red">Red</option>
+                <option value="orange">Orange</option>
+                <option value="yellow">Yellow</option>
+              </select>
+            </td>
+            <td>
+              <input
+                type="number"
+                id="sweetnessInput"
+                min="1"
+                max="10"
+                value="1"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <button onclick="showTestedResult()">Start</button>
+    </div>
+    <div id="lastResultContainer">
+      <h2>Result</h2>
+      <div id="finalResultOfSample"></div>
+    </div>
+    <img
+      src="../Images/apple-img.png"
+      class="fruit-image"
+      style="left: 10%; top: 10%"
+      alt="Fruit Image"
+    />
+    <img
+      src="../Images/green-apple-img.png"
+      class="fruit-image"
+      style="left: 5%; top: 75%"
+      alt="Fruit Image"
+    />
+    <img
+      src="../Images/orange-img.png"
+      class="fruit-image"
+      style="left: 12%; top: 55%"
+      alt="Fruit Image"
+    />
+    <img
+      src="../Images/grape-img.png"
+      class="fruit-image"
+      style="left: 50%; top: 7%"
+      alt="Fruit Image"
+    />
+    <img
+      src="../Images/apple-img.png"
+      class="fruit-image"
+      style="left: 30%; top: 20%"
+      alt="Fruit Image"
+    />
+    <img
+      src="../Images/banana-img.png"
+      class="fruit-image"
+      style="left: 80%; top: 15%"
+      alt="Fruit Image"
+    />
+    <img
+      src="../Images/grape-img.png"
+      class="fruit-image"
+      style="left: 90%; top: 40%"
+      alt="Fruit Image"
+    />
+    <img
+      src="../Images/green-apple-img.png"
+      class="fruit-image"
+      style="left: 70%; top: 60%"
+      alt="Fruit Image"
+    />
+    <img
+      src="../Images/banana-img.png"
+      class="fruit-image"
+      style="left: 88%; top: 80%"
+      alt="Fruit Image"
+    />
+    <img
+      src="../Images/apple-img.png"
+      class="fruit-image"
+      style="left: 40%; top: 80%"
+      alt="Fruit Image"
+    />
+    <img
+      src="../Images/grape-img.png"
+      class="fruit-image"
+      style="left: 20%; top: 85%"
+      alt="Fruit Image"
+    />
+    <img
+      src="../Images/grape-img.png"
+      class="fruit-image"
+      style="left: 60%; top: 83%"
+      alt="Fruit Image"
+    />
+    <img
+      src="../Images/banana-img.png"
+      class="fruit-image"
+      style="left: 28%; top: 60%"
+      alt="Fruit Image"
+    />
+    <img
+      src="../Images/orange-img.png"
+      class="fruit-image"
+      style="left: 65%; top: 35%"
+      alt="Fruit Image"
+    />
+    <img
+      src="../Images/grape-img.png"
+      class="fruit-image"
+      style="left: 2%; top: 35%"
+      alt="Fruit Image"
+    />
+    <img
+      src="../Images/orange-img.png"
+      class="fruit-image"
+      style="left: 92%; top: 5%"
+      alt="Fruit Image"
+    />
+    <img
+      src="../Images/orange-img.png"
+      class="fruit-image"
+      style="left: 22%; top: 3%"
+      alt="Fruit Image"
+    />
+    <img
+      src="../Images/banana-img.png"
+      class="fruit-image"
+      style="left: 18%; top: 35%"
+      alt="Fruit Image"
+    />
+    <img
+      src="../Images/apple-img.png"
+      class="fruit-image"
+      style="left: 69%; top: 3%"
+      alt="Fruit Image"
+    />
+    <img
+      src="../Images/apple-img.png"
+      class="fruit-image"
+      style="left: 80%; top: 50%"
+      alt="Fruit Image"
+    />
+    <img
+      src="../Images/banana-img.png"
+      class="fruit-image"
+      style="left: 38%; top: 8%"
+      alt="Fruit Image"
+    />
+    <img
+      src="../Images/orange-img.png"
+      class="fruit-image"
+      style="left: 75%; top: 85%"
+      alt="Fruit Image"
+    />
+
+    <script src="../JS/nural-network.js"></script>
+  </body>
+</html>
